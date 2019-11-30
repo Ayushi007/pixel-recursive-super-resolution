@@ -16,7 +16,7 @@ flags.DEFINE_integer("device_id", 0, "gpu device id")
 flags.DEFINE_integer("num_epoch", 30, "train epoch num")
 flags.DEFINE_integer("batch_size", 32, "batch_size")
 
-flags.DEFINE_float("learning_rate", 4e-4, "learning rate")
+flags.DEFINE_float("learning_rate", 4e-2, "learning rate")
 
 conf = flags.FLAGS
 

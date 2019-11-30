@@ -51,11 +51,13 @@ class Net(object):
       inputs = conv2d(inputs, 32, [1, 1], strides=[1, 1], mask_type=None, scope="conv_init")
       for i in range(2):
         for j in range(res_num):
-          inputs = resnet_block(inputs, 32, [3, 3], strides=[1, 1], scope='res' + str(i) + str(j), train=self.train)
+            inputs = spade_resblock(lr_images, inputs, 32, use_bias=True, sn=False, scope='res' + str(i) + str(j), train=True)
+          # inputs = resnet_block(lr_images, inputs, 32, [3, 3], strides=[1, 1], scope='res' + str(i) + str(j), train=self.train)
         inputs = deconv2d(inputs, 32, [3, 3], strides=[2, 2], scope="deconv" + str(i))
         inputs = tf.nn.relu(inputs)
       for i in range(res_num):
-        inputs = resnet_block(inputs, 32, [3, 3], strides=[1, 1], scope='res3' + str(i), train=self.train)
+          inputs = spade_resblock(lr_images, inputs, 32, use_bias=True, sn=False, scope='res3' + str(i), train=self.train)
+        # inputs = resnet_block(lr_images, inputs, 32, [3, 3], strides=[1, 1], scope='res3' + str(i), train=self.train)
       conditioning_logits = conv2d(inputs, 3*256, [1, 1], strides=[1, 1], mask_type=None, scope="conv")
 
       return conditioning_logits
